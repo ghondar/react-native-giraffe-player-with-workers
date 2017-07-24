@@ -3,9 +3,8 @@ package com.giraffetestreact;
 import android.app.Application;
 import android.util.Log;
 
-import com.fabricio.vergal.RNWorkers.RNWorkersManager;
 import com.facebook.react.ReactApplication;
-import com.fabricio.vergal.RNWorkers.RNWorkersPackage;
+import com.ocetnik.timer.BackgroundTimerPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -29,7 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNWorkersPackage(),
+            new BackgroundTimerPackage(),
           new GPlayerPackage()
       );
     }
@@ -38,13 +37,5 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public ReactNativeHost getReactNativeHost() {
       return mReactNativeHost;
-  }
-
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    SoLoader.init(this, /* native exopackage */ false);
-    //Initialize Manager instance
-    RNWorkersManager.getInstance().init(this, BuildConfig.DEBUG);
   }
 }

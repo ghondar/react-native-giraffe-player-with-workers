@@ -7,8 +7,10 @@
   },
   "dependencies": {
     "react": "15.3.2",
-    "react-native": "0.34.1",
+    "react-mixin": "2",
+    "react-native": "36",
+    "react-native-background-timer": "^1.1.0",
     "react-native-giraffe-player": "0.0.1",
-    "rn-workers": "^0.1.7"
+    "react-timer-mixin": "^0.13.3"
   }
 }

@@ -1,8 +1,8 @@
 rootProject.name = 'giraffeTestReact'
 
 include ':app'
-include ':rn-workers'
-project(':rn-workers').projectDir = new File(rootProject.projectDir, '../node_modules/rn-workers/android')
+include ':react-native-background-timer'
+project(':react-native-background-timer').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-background-timer/android')
 
 include ':ijkplayer-java'
 project(':ijkplayer-java').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-giraffe-player/android/ijkplayer-java')

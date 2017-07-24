@@ -10,40 +10,49 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  AppState
 } from 'react-native';
-import { Worker } from 'rn-workers';
-
 import GPlayer from 'react-native-giraffe-player'
+import BackgroundTimer from 'react-native-background-timer'
 
 class giraffeTestReact extends Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      appState: '',
+      intervalId: 0
+    }
+  }
+
   componentWillMount() {
-    GPlayer.addEventListener('onRenderingStart', this.onRenderingStart);
+    GPlayer.addEventListener('onRenderingStart', this.onRenderingStart.bind(this));
+    AppState.addEventListener('change', this._handleAppStateChange.bind(this));
     GPlayer.setTitle('hola mundo')
   }
 
   componentWillUnmount() {
     GPlayer.removeEventListener('onRenderingStart', this.onRenderingStart);
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  _handleAppStateChange = (nextAppState) => {
+    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      BackgroundTimer.clearInterval(this.state.intervalId);
+    }
+    this.setState({
+      appState: nextAppState
+    });
   }
 
   onRenderingStart() {
-    GPlayer.getDuration()
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    // interval 1 sec to show current position - worker at index.worker.js
-    this.worker = new Worker();
-    this.worker.postMessage("start");
-    this.worker.onmessage = async message => {
-      if(message == 'position') {
+    this.setState({
+      intervalId: BackgroundTimer.setInterval(async () => {
         const position = await GPlayer.getCurrentPosition()
         console.log(position)
-      }
-    }
+      }, 1000)
+    })
   }
 
   render() {

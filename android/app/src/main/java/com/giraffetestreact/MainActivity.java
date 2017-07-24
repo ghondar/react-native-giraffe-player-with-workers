@@ -3,7 +3,6 @@ package com.giraffetestreact;
 import android.os.Bundle;
 import android.os.StrictMode;
 
-import com.fabricio.vergal.RNWorkers.RNWorkersManager;
 import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {
@@ -21,8 +20,6 @@ public class MainActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        //CRITICAL: Must be started before super.onCreate to be possible to debug on chrome console
-        RNWorkersManager.getInstance().startWorkers();
         super.onCreate(savedInstanceState);
     }
 }
